@@ -18,36 +18,44 @@ public class Main {
     private final String BASE_URL = "http://www.omdbapi.com/?t=";
     private final String API_KEY_PARAM;
 
+    private final List<SeriesData> seriesDataList = new ArrayList<>();
+
     public Main(Dotenv dotenv) {
         String API_KEY = dotenv.get("API_KEY");
         this.API_KEY_PARAM = "&apikey=" + API_KEY;
     }
 
     public void displayMenu() {
+        var option = -1;
 
-        var menu = """
-                1 - Buscar séries
-                2 - Buscar episódios
-                
-                0 - Sair
-                """;
+        while (option != 0) {
+            var menu = """
+                    1 - Buscar séries
+                    2 - Buscar episódios
+                    3 - Listar séries buscadas
+                    
+                    0 - Sair
+                    """;
 
-        System.out.println(menu);
-        var option = reading.nextInt();
-        reading.nextLine();
-
-        switch (option) {
-            case 1:
-                searchSeries();
-                break;
-            case 2:
-                searchEpisodesBySeries();
-                break;
-            case 0:
-                System.out.println("Saindo...");
-                break;
-            default:
-                System.out.println("Opção inválda");
+            System.out.println(menu);
+            option = reading.nextInt();
+            reading.nextLine();
+                switch (option) {
+                    case 1:
+                        searchSeries();
+                        break;
+                    case 2:
+                        searchEpisodesBySeries();
+                        break;
+                    case 3:
+                        listSearchedSeries();
+                        break;
+                    case 0:
+                        System.out.println("Saindo...");
+                        break;
+                    default:
+                        System.out.println("Opção inválda");
+                }
         }
     }
 
@@ -65,6 +73,8 @@ public class Main {
     private void searchSeries() {
         SeriesData seriesData = getSeriesData();
         System.out.println(seriesData);
+
+        this.seriesDataList.add(seriesData);
     }
 
     private void searchEpisodesBySeries() {
@@ -83,5 +93,9 @@ public class Main {
         }
 
         seasons.forEach(System.out::println);
+    }
+
+    private void listSearchedSeries() {
+        seriesDataList.forEach(System.out::println);
     }
 }
