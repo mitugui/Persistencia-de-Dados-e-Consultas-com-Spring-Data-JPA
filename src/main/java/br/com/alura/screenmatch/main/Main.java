@@ -14,11 +14,14 @@ public class Main {
     private final Scanner reading = new Scanner(System.in);
     private final ApiConsumption apiConsumption = new ApiConsumption();
     private final DataConverter converter = new DataConverter();
-    private final Dotenv dotenv = Dotenv.load();
 
     private final String BASE_URL = "http://www.omdbapi.com/?t=";
-    private final String API_KEY = dotenv.get("API_KEY");
-    private final String API_KEY_PARAM = "&apikey=" + API_KEY;
+    private final String API_KEY_PARAM;
+
+    public Main(Dotenv dotenv) {
+        String API_KEY = dotenv.get("API_KEY");
+        this.API_KEY_PARAM = "&apikey=" + API_KEY;
+    }
 
     public void displayMenu() {
 

@@ -49,7 +49,7 @@ public class ScreenmatchApplication implements CommandLineRunner {
 	}
 
 	private void startMain() {
-		var main =  new Main();
+		var main = new Main(dotenv);
 		main.displayMenu();
 	}
 }
