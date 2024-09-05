@@ -16,7 +16,7 @@ public class Main {
     private final DataConverter converter = new DataConverter();
     private final Dotenv dotenv = Dotenv.load();
 
-    final String BASE_URL = "http://www.omdbapi.com/?t=";
+    private final String BASE_URL = "http://www.omdbapi.com/?t=";
     private final String API_KEY = dotenv.get("API_KEY");
     private final String API_KEY_PARAM = "&apikey=" + API_KEY;
 
