@@ -1,14 +1,17 @@
 package br.com.alura.screenmatch.main;
 
 import br.com.alura.screenmatch.models.SeasonData;
+import br.com.alura.screenmatch.models.Series;
 import br.com.alura.screenmatch.models.SeriesData;
 import br.com.alura.screenmatch.services.ApiConsumption;
 import br.com.alura.screenmatch.services.DataConverter;
 import io.github.cdimascio.dotenv.Dotenv;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Main {
     private final Scanner reading = new Scanner(System.in);
@@ -72,7 +75,8 @@ public class Main {
 
     private void searchSeries() {
         SeriesData seriesData = getSeriesData();
-        System.out.println(seriesData);
+        var series = new Series(seriesData);
+        System.out.println(series);
 
         this.seriesDataList.add(seriesData);
     }
@@ -96,6 +100,14 @@ public class Main {
     }
 
     private void listSearchedSeries() {
-        seriesDataList.forEach(System.out::println);
+        List<Series> series;
+
+        series = seriesDataList.stream()
+                .map(d -> new Series(d))
+                        .collect(Collectors.toList());
+
+        series.stream()
+                .sorted(Comparator.comparing(Series::getGenre))
+                .forEach(System.out::println);
     }
 }

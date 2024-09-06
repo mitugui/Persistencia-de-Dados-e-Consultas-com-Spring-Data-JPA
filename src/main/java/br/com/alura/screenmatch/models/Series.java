@@ -1,8 +1,6 @@
 package br.com.alura.screenmatch.models;
 
-import com.fasterxml.jackson.annotation.JsonAlias;
-
-import java.util.OptionalDouble;
+    import java.util.OptionalDouble;
 
 public class Series {
     private String title;
@@ -21,5 +19,72 @@ public class Series {
         this.actors = seriesData.actors();
         this.poster = seriesData.poster();
         this.synopsis = seriesData.synopsis();
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public Integer getTotalSeasons() {
+        return totalSeasons;
+    }
+
+    public void setTotalSeasons(Integer totalSeasons) {
+        this.totalSeasons = totalSeasons;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public Category getGenre() {
+        return genre;
+    }
+
+    public void setGenre(Category genre) {
+        this.genre = genre;
+    }
+
+    public String getActors() {
+        return actors;
+    }
+
+    public void setActors(String actors) {
+        this.actors = actors;
+    }
+
+    public String getPoster() {
+        return poster;
+    }
+
+    public void setPoster(String poster) {
+        this.poster = poster;
+    }
+
+    public String getSynopsis() {
+        return synopsis;
+    }
+
+    public void setSynopsis(String synopsis) {
+        this.synopsis = synopsis;
+    }
+
+    @Override
+    public String toString() {
+        return  "genre=" + genre +
+                ", title='" + title + '\'' +
+                ", totalSeasons=" + totalSeasons +
+                ", rating=" + rating +
+                ", actors='" + actors + '\'' +
+                ", poster='" + poster + '\'' +
+                ", synopsis='" + synopsis + '\'';
     }
 }
