@@ -1,5 +1,7 @@
 package br.com.alura.screenmatch.models;
 
+    import br.com.alura.screenmatch.services.MyMemoryQuery;
+
     import java.util.OptionalDouble;
 
 public class Series {
@@ -18,7 +20,7 @@ public class Series {
         this.genre = Category.fromString(seriesData.genre().split(",")[0].trim());
         this.actors = seriesData.actors();
         this.poster = seriesData.poster();
-        this.synopsis = seriesData.synopsis();
+        this.synopsis = MyMemoryQuery.getTranslation(seriesData.synopsis());
     }
 
     public String getTitle() {
