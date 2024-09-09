@@ -7,7 +7,7 @@ public enum Category {
     DRAMA("Drama"),
     CRIME("Crime");
 
-    private String omdbCategory;
+    private final String omdbCategory;
 
     Category(String omdbCategory) {
         this.omdbCategory = omdbCategory;
