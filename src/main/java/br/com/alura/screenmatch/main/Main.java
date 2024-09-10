@@ -21,7 +21,7 @@ public class Main {
     private final String BASE_URL = "http://www.omdbapi.com/?t=";
     private final String API_KEY_PARAM;
 
-    private final List<SeriesData> seriesDataList = new ArrayList<>();
+    private final List<Series> seriesList = new ArrayList<>();
 
     public Main(Dotenv dotenv) {
         String API_KEY = dotenv.get("API_KEY");
@@ -78,7 +78,7 @@ public class Main {
         var series = new Series(seriesData);
         System.out.println(series);
 
-        this.seriesDataList.add(seriesData);
+        this.seriesList.add(series);
     }
 
     private void searchEpisodesBySeries() {
@@ -100,14 +100,8 @@ public class Main {
     }
 
     private void listSearchedSeries() {
-        List<Series> series;
-
-        series = seriesDataList.stream()
-                .map(d -> new Series(d))
-                        .collect(Collectors.toList());
-
-        series.stream()
-                .sorted(Comparator.comparing(Series::getGenre))
+        seriesList.stream()
+                .sorted(Comparator.comparing(Series::getTitle))
                 .forEach(System.out::println);
     }
 }
