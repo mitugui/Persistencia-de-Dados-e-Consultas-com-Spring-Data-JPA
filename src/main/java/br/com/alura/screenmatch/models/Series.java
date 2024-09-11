@@ -1,13 +1,21 @@
 package br.com.alura.screenmatch.models;
 
-    import br.com.alura.screenmatch.services.MyMemoryQuery;
+import br.com.alura.screenmatch.services.MyMemoryQuery;
+import jakarta.persistence.*;
 
-    import java.util.OptionalDouble;
+import java.util.OptionalDouble;
 
+@Entity
+@Table(name = "series")
 public class Series {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(unique = true)
     private String title;
     private Integer totalSeasons;
     private Double rating;
+    @Enumerated(EnumType.STRING)
     private Category genre;
     private String actors;
     private String poster;
@@ -21,6 +29,16 @@ public class Series {
         this.actors = seriesData.actors();
         this.poster = seriesData.poster();
         this.synopsis = MyMemoryQuery.getTranslation(seriesData.synopsis());
+    }
+
+    public Series() {}
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitle() {
