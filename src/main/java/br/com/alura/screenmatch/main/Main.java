@@ -3,6 +3,7 @@ package br.com.alura.screenmatch.main;
 import br.com.alura.screenmatch.models.SeasonData;
 import br.com.alura.screenmatch.models.Series;
 import br.com.alura.screenmatch.models.SeriesData;
+import br.com.alura.screenmatch.repository.SeriesRepository;
 import br.com.alura.screenmatch.services.ApiConsumption;
 import br.com.alura.screenmatch.services.DataConverter;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class Main {
     private final Scanner reading = new Scanner(System.in);
@@ -23,9 +23,13 @@ public class Main {
 
     private final List<Series> seriesList = new ArrayList<>();
 
-    public Main(Dotenv dotenv) {
+    private final SeriesRepository seriesRepository;
+
+    public Main(Dotenv dotenv, SeriesRepository seriesRepository) {
         String API_KEY = dotenv.get("API_KEY");
         this.API_KEY_PARAM = "&apikey=" + API_KEY;
+
+        this.seriesRepository = seriesRepository;
     }
 
     public void displayMenu() {
@@ -79,6 +83,8 @@ public class Main {
         System.out.println(series);
 
         this.seriesList.add(series);
+
+        seriesRepository.save(series);
     }
 
     private void searchEpisodesBySeries() {

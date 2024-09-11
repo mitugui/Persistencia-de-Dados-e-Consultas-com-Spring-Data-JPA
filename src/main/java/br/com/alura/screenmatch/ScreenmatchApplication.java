@@ -2,7 +2,9 @@ package br.com.alura.screenmatch;
 
 import br.com.alura.screenmatch.exceptions.ApiKeyException;
 import br.com.alura.screenmatch.main.Main;
+import br.com.alura.screenmatch.repository.SeriesRepository;
 import io.github.cdimascio.dotenv.Dotenv;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,6 +15,9 @@ import java.net.URL;
 
 @SpringBootApplication
 public class ScreenmatchApplication implements CommandLineRunner {
+	@Autowired
+	private SeriesRepository seriesRepository;
+
 	private final Dotenv dotenv = Dotenv.load();
 
 	public static void main(String[] args) {
@@ -49,7 +54,7 @@ public class ScreenmatchApplication implements CommandLineRunner {
 	}
 
 	private void startMain() {
-		var main = new Main(dotenv);
+		var main = new Main(dotenv, seriesRepository);
 		main.displayMenu();
 	}
 }
