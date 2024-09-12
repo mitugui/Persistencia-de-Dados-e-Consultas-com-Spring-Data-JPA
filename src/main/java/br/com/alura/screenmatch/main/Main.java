@@ -21,8 +21,6 @@ public class Main {
     private final String BASE_URL = "http://www.omdbapi.com/?t=";
     private final String API_KEY_PARAM;
 
-    private final List<Series> seriesList = new ArrayList<>();
-
     private final SeriesRepository seriesRepository;
 
     public Main(Dotenv dotenv, SeriesRepository seriesRepository) {
@@ -82,8 +80,6 @@ public class Main {
         var series = new Series(seriesData);
         System.out.println(series);
 
-        this.seriesList.add(series);
-
         seriesRepository.save(series);
     }
 
@@ -106,7 +102,8 @@ public class Main {
     }
 
     private void listSearchedSeries() {
-        seriesList.stream()
+        List<Series> series = seriesRepository.findAll();
+        series.stream()
                 .sorted(Comparator.comparing(Series::getTitle))
                 .forEach(System.out::println);
     }
