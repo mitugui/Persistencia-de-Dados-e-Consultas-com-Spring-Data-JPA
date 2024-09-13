@@ -39,6 +39,7 @@ public class Main {
                     1 - Buscar séries
                     2 - Buscar episódios
                     3 - Listar séries buscadas
+                    4 - Buscar série por título
                     
                     0 - Sair
                     """;
@@ -55,6 +56,9 @@ public class Main {
                         break;
                     case 3:
                         listSearchedSeries();
+                        break;
+                    case 4:
+                        searchSeriesByTitle();
                         break;
                     case 0:
                         System.out.println("Saindo...");
@@ -127,5 +131,18 @@ public class Main {
         seriesList.stream()
                 .sorted(Comparator.comparing(Series::getTitle))
                 .forEach(System.out::println);
+    }
+
+    private void searchSeriesByTitle() {
+        System.out.println("Digite o nome da série para busca:");
+        var seriesName = reading.nextLine();
+
+        Optional<Series> searchedSeries = seriesRepository.findByTitleContainingIgnoreCase(seriesName);
+
+        if (searchedSeries.isPresent()) {
+            System.out.println("Dados da série: " + searchedSeries.get());
+        } else {
+            System.out.println("Série não encontrada!");
+        }
     }
 }
