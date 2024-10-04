@@ -10,4 +10,6 @@ public interface SeriesRepository extends JpaRepository<Series, Long> {
     Optional<Series> findByTitleContainingIgnoreCase(String seriesName);
 
     List<Series> findByActorsContainingIgnoreCaseAndRatingGreaterThanEqual(String actorName, Double rating);
+
+    List<Series> findTop5ByOrderByRatingDesc();
 }
