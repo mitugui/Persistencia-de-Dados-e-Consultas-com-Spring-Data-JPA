@@ -192,10 +192,10 @@ public class Main {
         var maximumSeasons = reading.nextInt();
         reading.nextLine();
         System.out.println("Avaliações a partir de que valor?");
-        var rating = reading.nextDouble();
+        var minimumRating = reading.nextDouble();
         reading.nextLine();
         List<Series> searchedSeries = seriesRepository.
-                findByTotalSeasonsLessThanEqualAndRatingGreaterThanEqual(maximumSeasons, rating);
+                seriesBySeasonAndRating(maximumSeasons, minimumRating);
 
         if (searchedSeries.isEmpty()) {
             System.out.println("Nenhuma série encontrada!");
