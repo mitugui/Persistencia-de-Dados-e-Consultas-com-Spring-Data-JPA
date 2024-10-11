@@ -1,6 +1,7 @@
 package br.com.alura.screenmatch.repository;
 
 import br.com.alura.screenmatch.models.Category;
+import br.com.alura.screenmatch.models.Episode;
 import br.com.alura.screenmatch.models.Series;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +20,7 @@ public interface SeriesRepository extends JpaRepository<Series, Long> {
 
     @Query("SELECT s FROM Series s WHERE s.totalSeasons <= :maximumSeasons AND s.rating >= :minimumRating")
     List<Series> seriesBySeasonAndRating(Integer maximumSeasons, Double minimumRating);
+
+    @Query("SELECT e FROM Series s JOIN s.episodes e WHERE e.title ILIKE %:episodeExcerpt%")
+    List<Episode> episodesByExcerpt(String episodeExcerpt);
 }

@@ -41,6 +41,7 @@ public class Main {
                     6 - Top 5 séries
                     7 - Buscar séries por categoria
                     8 - Buscar séries por quantidade de temporadas e avaliação
+                    9 - Buscar episódio pelo trecho
                     
                     0 - Sair
                     """;
@@ -72,6 +73,9 @@ public class Main {
                         break;
                     case 8:
                         searchSeriesByTotalSeasonsAndRating();
+                        break;
+                    case 9:
+                        searchEpisodeByExcerpt();
                         break;
                     case 0:
                         System.out.println("Saindo...");
@@ -204,5 +208,16 @@ public class Main {
             searchedSeries.forEach(s ->
                     System.out.println(s.getTitle() + "  - avaliação: " + s.getRating()));
         }
+    }
+
+    private void searchEpisodeByExcerpt() {
+        System.out.println("Qual o nome do episódio para a busca?");
+        var episodeExcerpt = reading.nextLine();
+        List<Episode> foundedEpisodes = seriesRepository.episodesByExcerpt(episodeExcerpt);
+
+        foundedEpisodes.forEach(f ->
+                System.out.printf("Série: %s, Temporada %s - Episódio %s - %s\n",
+                        f.getSeries().getTitle(), f.getSeason(),
+                        f.getEpisodeNumber(), f.getTitle()));
     }
 }
