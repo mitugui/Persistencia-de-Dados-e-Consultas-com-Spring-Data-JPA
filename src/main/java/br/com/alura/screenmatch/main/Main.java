@@ -21,6 +21,8 @@ public class Main {
 
     private List<Series> seriesList = new ArrayList<>();
 
+    private Optional<Series> searchedSeries;
+
     public Main(Dotenv dotenv, SeriesRepository seriesRepository) {
         String API_KEY = dotenv.get("API_KEY");
         this.API_KEY_PARAM = "&apikey=" + API_KEY;
@@ -42,6 +44,7 @@ public class Main {
                     7 - Buscar séries por categoria
                     8 - Buscar séries por quantidade de temporadas e avaliação
                     9 - Buscar episódio pelo trecho
+                    10 - Top 5 episódios de uma série
                     
                     0 - Sair
                     """;
@@ -76,6 +79,9 @@ public class Main {
                         break;
                     case 9:
                         searchEpisodeByExcerpt();
+                        break;
+                    case 10:
+                        topEpisodesBySeries();
                         break;
                     case 0:
                         System.out.println("Saindo...");
@@ -154,7 +160,7 @@ public class Main {
         System.out.println("Digite o nome da série para busca:");
         var seriesName = reading.nextLine();
 
-        Optional<Series> searchedSeries = seriesRepository.findByTitleContainingIgnoreCase(seriesName);
+        searchedSeries = seriesRepository.findByTitleContainingIgnoreCase(seriesName);
 
         if (searchedSeries.isPresent()) {
             System.out.println("Dados da série: " + searchedSeries.get());
@@ -219,5 +225,22 @@ public class Main {
                 System.out.printf("Série: %s, Temporada %s - Episódio %s - %s\n",
                         f.getSeries().getTitle(), f.getSeason(),
                         f.getEpisodeNumber(), f.getTitle()));
+    }
+
+    private void topEpisodesBySeries() {
+        searchSeriesByTitle();
+        if (searchedSeries.isPresent()) {
+            Series series = searchedSeries.get();
+            List<Episode> topEpisodes = seriesRepository.topEpisodesBySeries(series);
+            if (!topEpisodes.isEmpty()) {
+                System.out.printf("*** Top 5 episódios de %s ***\n", series.getTitle());
+                topEpisodes.forEach(e ->
+                        System.out.printf("Série: %s, Temporada %s - Episódio %s - Avaliação %s - %s\n",
+                                e.getSeries().getTitle(), e.getSeason(),
+                                e.getEpisodeNumber(), e.getRating(), e.getTitle()));
+            } else {
+                System.out.println("Episódios não encontrados! Tente pesquisá-los antes de buscar o top 5");
+            }
+        }
     }
 }
